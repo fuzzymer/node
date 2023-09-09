@@ -1,6 +1,14 @@
 export class ExpectError extends Error {
-  name = "ExpectError";
+  name = 'ExpectError'
   constructor(message: string) {
-    super(message);
+    super(message)
+  }
+}
+
+export class UnknownDataTypeError extends Error {
+  name = 'UnknownDataTypeError'
+  supportedTypes = 'INT | FLOAT | BIGINT | STRING'
+  constructor(dataType: string) {
+    super(`${dataType} could not be understood or is not supported.`)
   }
 }

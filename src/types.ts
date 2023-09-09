@@ -1,53 +1,53 @@
 export interface FuzzyOptions {
-  headers: Record<string, string>;
+  headers: Record<string, string>
 }
 
 export interface CustomTesting {
-  valueToTest: string | number | boolean | Record<string, any>;
+  valueToTest: string | number | boolean | Record<string, unknown>
   expect: {
-    statusCode: number;
-  };
+    statusCode: number
+  }
 }
 
 export interface Options {
-  exitOnError: boolean;
-  numberOfTests: number;
-  output: string[];
+  exitOnError: boolean
+  numberOfTests: number
+  output: string[]
 }
 
-export const DataTypes = {
+export const DataTypes: Record<string, boolean> = {
   INT: true,
   FLOAT: true,
   BIGINT: true,
   STRING: true,
   BOOL: true,
-  NULL: true,
-};
+  NULL: true
+}
 
 export interface TestValues {
-  argName: string;
-  argTests: Record<string, any>[];
+  argName: string
+  argTests: Record<string, unknown>[]
 }
 
 export interface TaskPlan {
-  taskId: string;
-  testValues: TestValues;
+  taskId: string
+  testValues: TestValues
 }
 
 export interface TestPlan {
-  testId: string;
-  numberOfTests: number;
-  args: Record<string, string>;
-  tasks: TaskPlan[];
+  testId: string
+  numberOfTests: number
+  args: Record<string, string>
+  tasks: TaskPlan[]
 }
 
 export interface Expect {
-  expectFunction: Function;
-  valueToExpect: number | string | Record<string, any>;
+  expectFunction: unknown
+  valueToExpect: number | string | Record<string, unknown>
 }
 
 export type ParsedUrl = {
-  url: string;
-  path: string;
-  params: Record<string, string>;
-};
+  url: string
+  path: string
+  params: Record<string, string>
+}
