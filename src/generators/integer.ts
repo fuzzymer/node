@@ -7,6 +7,6 @@ export const integerGenerator = (numberOfTests: number) => {
     { name: 'negative', value: randomInt(-200, -1) }
   ]
   const integerTasks = []
-  while (numberOfTests--) integerTasks.push(tests()[(Math.random() * 10) % 3])
+  while (numberOfTests--) integerTasks.push(tests()[randomInt(0, 3)])
   return integerTasks
 }

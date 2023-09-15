@@ -1,16 +1,14 @@
-import { generateTests } from './generators/generator.js'
+import { httpStatusExpectFunction } from './expect/http'
+import { generateTests } from './generators/generator'
 import { Runner } from './runner.js'
-import { FuzzyOptions, Options, ParsedUrl, TestPlan } from './types.js'
+import { FuzzyOptions, Options, ParsedUrl, TestFunction, TestPlan } from './types.js'
 import { replaceStringArgWithValue, urlParser } from './utils.js'
 
-const httpExpectFunction = (response: Response, statusCode: number) => response.status === statusCode
-
-class FuzzyHttp extends Runner {
-  constructor(options: Options) {
+export class FuzzyHttp extends Runner {
+  constructor(options?: Options) {
     super(
       options ?? {
         exitOnError: true,
-        output: ['json'],
         numberOfTests: 3
       }
     )
@@ -18,10 +16,14 @@ class FuzzyHttp extends Runner {
   get = async (urlTemplate: string, options: FuzzyOptions) => {
     const parsedUrl = urlParser(urlTemplate)
     const fetchFunction = this.#wrapHttpRequest(parsedUrl as ParsedUrl, 'GET', options.headers)
-    await this.runTestPlan(generateTests(parsedUrl.params!, this.options.numberOfTests) as TestPlan, fetchFunction, {
-      valueToExpect: 200,
-      expectFunction: httpExpectFunction
-    })
+    await this.runTestPlan(
+      generateTests(parsedUrl.params!, this.options.numberOfTests) as TestPlan,
+      fetchFunction as TestFunction,
+      {
+        valueToExpect: 200,
+        expectFunction: httpStatusExpectFunction
+      }
+    )
   }
 
   #wrapHttpRequest = (parsedUrl: ParsedUrl, method: string, headers: Record<string, string>) => {
@@ -30,11 +32,15 @@ class FuzzyHttp extends Runner {
     for (const key of Object.keys(parsedUrl.params)) {
       url += `${key}={arg${argCounter++}}&`
     }
+    if (argCounter) url = url.slice(0, -1)
+
     const httpFetchFunction = async (...args: string[]) => {
+      let fetchUrl = url
       args.forEach((arg, index) => {
-        url = replaceStringArgWithValue(url)(`{arg${index}}`, arg)
+        fetchUrl = replaceStringArgWithValue(fetchUrl)(`{arg${index}}`, arg)
       })
-      return await fetch(url, { method, headers })
+      console.log(fetchUrl)
+      return await fetch(fetchUrl, { method, headers })
     }
     return httpFetchFunction
   }

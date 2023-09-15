@@ -31,5 +31,6 @@ export const generateTests = (args: Record<string, string>, numberOfTests: numbe
       }
     })
   }
+  
   return test
 }

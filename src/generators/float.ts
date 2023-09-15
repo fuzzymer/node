@@ -8,6 +8,6 @@ export const floatGenerator = (numberOfTests: number) => {
     { name: 'negative decimal', value: -1 * randomInt(50) * Math.random() }
   ]
   const integerTasks = []
-  while (numberOfTests--) integerTasks.push(tests()[(Math.random() * 10) % 4])
+  while (numberOfTests--) integerTasks.push(tests()[randomInt(0, 4)])
   return integerTasks
 }

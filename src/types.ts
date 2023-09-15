@@ -12,7 +12,6 @@ export interface CustomTesting {
 export interface Options {
   exitOnError: boolean
   numberOfTests: number
-  output: string[]
 }
 
 export const DataTypes: Record<string, boolean> = {
@@ -42,7 +41,7 @@ export interface TestPlan {
 }
 
 export interface Expect {
-  expectFunction: unknown
+  expectFunction: (...args: unknown[]) => Promise<boolean> | boolean
   valueToExpect: number | string | Record<string, unknown>
 }
 
@@ -51,3 +50,6 @@ export type ParsedUrl = {
   path: string
   params: Record<string, string>
 }
+
+
+export type TestFunction = (...args: unknown[]) => Promise<unknown>

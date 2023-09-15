@@ -15,7 +15,8 @@
     "format:check": "prettier --check src/**",
     "format:fix": "prettier --write src/**",
     "lint:check": "eslint src/** --ext=ts",
-    "lint:fix": "eslint src/** --fix --ext=ts"
+    "lint:fix": "eslint src/** --fix --ext=ts",
+    "dev": "tsx watch src/index.ts"
   },
   "keywords": [],
   "author": "aarontravass",
@@ -27,6 +28,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "prettier": "^3.0.3",
+    "tsx": "^3.12.10",
     "typescript": "^5.2.2"
   }
 }

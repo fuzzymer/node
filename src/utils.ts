@@ -8,8 +8,9 @@ export const urlParser = (urlTemplate: string) => {
   parsedUrl.path = url.pathname
   parsedUrl.params = {}
   for (const [key, value] of url.searchParams) {
-    if (!DataTypes[value.toUpperCase()]) throw new UnknownDataTypeError(value)
-    parsedUrl.params[key] = value.toUpperCase()
+    const dataType = stripTemplate(value)
+    if (!DataTypes[dataType.toUpperCase()]) throw new UnknownDataTypeError(dataType)
+    parsedUrl.params[key] = dataType.toUpperCase()
   }
   return parsedUrl
 }
@@ -17,5 +18,8 @@ export const urlParser = (urlTemplate: string) => {
 export const replaceStringArgWithValue = (stringValue: string) => (argName: string, value: string) => {
   const index = stringValue.indexOf(argName)
   if (index == -1) return stringValue
-  return stringValue.slice(0, index + 1) + value + stringValue.slice(index + 1 + argName.length)
+  return stringValue.slice(0, index) + value + stringValue.slice(index + 1 + argName.length)
 }
+
+
+export const stripTemplate = (templateVar: string) => templateVar.slice(1, templateVar.length - 1)
