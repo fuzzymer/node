@@ -9,15 +9,15 @@ export class FuzzyHttp extends Runner {
     super(
       options ?? {
         exitOnError: true,
-        numberOfTests: 3
+        numberOfTests: 8
       }
     )
   }
-  get = async (urlTemplate: string, options: FuzzyOptions) => {
+  get = async (urlTemplate: string, options?: FuzzyOptions) => {
     const parsedUrl = urlParser(urlTemplate)
-    const fetchFunction = this.#wrapHttpRequest(parsedUrl as ParsedUrl, 'GET', options.headers)
+    const fetchFunction = this.#wrapHttpRequest(parsedUrl as ParsedUrl, 'GET', options?.headers)
     await this.runTestPlan(
-      generateTests(parsedUrl.params!, this.options.numberOfTests) as TestPlan,
+      generateTests(parsedUrl.testArgs!, this.options.numberOfTests) as TestPlan,
       fetchFunction as TestFunction,
       {
         valueToExpect: 200,
@@ -26,11 +26,14 @@ export class FuzzyHttp extends Runner {
     )
   }
 
-  #wrapHttpRequest = (parsedUrl: ParsedUrl, method: string, headers: Record<string, string>) => {
-    let url = `${parsedUrl.url}${parsedUrl.path}?`
+  #wrapHttpRequest = (parsedUrl: ParsedUrl, method: string, headers?: Record<string, string>) => {
+    let url = `${parsedUrl.url}`
     let argCounter = 0
-    for (const key of Object.keys(parsedUrl.params)) {
-      url += `${key}={arg${argCounter++}}&`
+    for (const key of parsedUrl.pathParams) {
+      url +=  (key ?? `{arg${argCounter++}}`) + '/'
+    }
+    for (const key of Object.keys(parsedUrl.queryParams)) {
+      url += `${key}={` + (parsedUrl.queryParams[key] ?? `arg${argCounter++}`) + '}&'
     }
     if (argCounter) url = url.slice(0, -1)
 
@@ -40,8 +43,11 @@ export class FuzzyHttp extends Runner {
         fetchUrl = replaceStringArgWithValue(fetchUrl)(`{arg${index}}`, arg)
       })
       console.log(fetchUrl)
-      return await fetch(fetchUrl, { method, headers })
+      return await fetch(fetchUrl, { method, headers: headers ?? { accept: 'application/json' } })
     }
     return httpFetchFunction
   }
 }
+
+const fux = new FuzzyHttp()
+;(async () => await fux.get('https://eglobaldev.azurewebsites.net/api/othermedical/Profile/Get/featured/{STRING}'))()

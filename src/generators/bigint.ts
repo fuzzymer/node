@@ -7,7 +7,7 @@ export const bigIntGenerator = (numberOfTests: number) => {
     { name: 'positive decimal', value: 2 ** randomInt(80, 90) + Math.random() },
     { name: 'negative decimal', value: -1 * (2 ** randomInt(80, 90) + Math.random()) }
   ]
-  const integerTasks = []
-  while (numberOfTests--) integerTasks.push(tests()[randomInt(0, 4)])
-  return integerTasks
+  const bigIntegerTasks = []
+  while (numberOfTests--) bigIntegerTasks.push(tests()[randomInt(0, 4)])
+  return bigIntegerTasks
 }

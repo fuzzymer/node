@@ -25,7 +25,7 @@ export const DataTypes: Record<string, boolean> = {
 
 export interface TestValues {
   argName: string
-  argTests: Record<string, unknown>[]
+  argTests: Record<string, unknown | null>[]
 }
 
 export interface TaskPlan {
@@ -36,7 +36,7 @@ export interface TaskPlan {
 export interface TestPlan {
   testId: string
   numberOfTests: number
-  args: Record<string, string>
+  args: Record<string, string>[]
   tasks: TaskPlan[]
 }
 
@@ -47,9 +47,9 @@ export interface Expect {
 
 export type ParsedUrl = {
   url: string
-  path: string
-  params: Record<string, string>
+  queryParams: Record<string, string | null>
+  pathParams: (string | null)[]
+  testArgs: Record<string, string>[]
 }
-
 
 export type TestFunction = (...args: unknown[]) => Promise<unknown>

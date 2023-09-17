@@ -16,7 +16,8 @@
     "format:fix": "prettier --write src/**",
     "lint:check": "eslint src/** --ext=ts",
     "lint:fix": "eslint src/** --fix --ext=ts",
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "aarontravass",
@@ -27,6 +28,7 @@
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^8.0.3",
     "prettier": "^3.0.3",
     "tsx": "^3.12.10",
     "typescript": "^5.2.2"

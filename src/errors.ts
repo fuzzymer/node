@@ -7,7 +7,7 @@ export class ExpectError extends Error {
 
 export class UnknownDataTypeError extends Error {
   name = 'UnknownDataTypeError'
-  supportedTypes = 'INT | FLOAT | BIGINT | STRING'
+  supportedTypes = 'INT | FLOAT | BIGINT | STRING | BOOL | NULL'
   constructor(dataType: string) {
     super(`${dataType} could not be understood or is not supported.`)
   }
