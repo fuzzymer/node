@@ -11,7 +11,6 @@ export interface CustomTesting {
 
 export interface Options {
   exitOnError: boolean
-  numberOfTests: number
 }
 
 export const DataTypes: Record<string, boolean> = {
@@ -53,3 +52,8 @@ export type ParsedUrl = {
 }
 
 export type TestFunction = (...args: unknown[]) => Promise<unknown>
+
+export type TestMetadata = {
+  argList: Record<string, unknown>[]
+  error?: Error;
+}

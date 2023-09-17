@@ -8,8 +8,7 @@ export class FuzzyHttp extends Runner {
   constructor(options?: Options) {
     super(
       options ?? {
-        exitOnError: true,
-        numberOfTests: 8
+        exitOnError: true
       }
     )
   }
@@ -17,7 +16,7 @@ export class FuzzyHttp extends Runner {
     const parsedUrl = urlParser(urlTemplate)
     const fetchFunction = this.#wrapHttpRequest(parsedUrl as ParsedUrl, 'GET', options?.headers)
     await this.runTestPlan(
-      generateTests(parsedUrl.testArgs!, this.options.numberOfTests) as TestPlan,
+      generateTests(parsedUrl.testArgs!, 10) as TestPlan,
       fetchFunction as TestFunction,
       {
         valueToExpect: 200,
@@ -30,7 +29,7 @@ export class FuzzyHttp extends Runner {
     let url = `${parsedUrl.url}`
     let argCounter = 0
     for (const key of parsedUrl.pathParams) {
-      url +=  (key ?? `{arg${argCounter++}}`) + '/'
+      url += (key ?? `{arg${argCounter++}}`) + '/'
     }
     for (const key of Object.keys(parsedUrl.queryParams)) {
       url += `${key}={` + (parsedUrl.queryParams[key] ?? `arg${argCounter++}`) + '}&'
@@ -42,12 +41,11 @@ export class FuzzyHttp extends Runner {
       args.forEach((arg, index) => {
         fetchUrl = replaceStringArgWithValue(fetchUrl)(`{arg${index}}`, arg)
       })
-      console.log(fetchUrl)
       return await fetch(fetchUrl, { method, headers: headers ?? { accept: 'application/json' } })
     }
     return httpFetchFunction
   }
 }
 
-const fux = new FuzzyHttp()
+const fux = new FuzzyHttp({ exitOnError: false })
 ;(async () => await fux.get('https://eglobaldev.azurewebsites.net/api/othermedical/Profile/Get/featured/{STRING}'))()

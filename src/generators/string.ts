@@ -3,20 +3,15 @@ const CHARSET = ['abcdefghijklmnopqrstuvwxyz', '0123456789', `~!@#$%^&*()_+{}|:?
 const genTestFunction = (charSet: string) => [
   { name: 'small string', value: charSet },
   { name: 'large', value: charSet.repeat(10) },
-  { name: 'very large', value: charSet.repeat(1000) }
+  { name: 'very large', value: charSet }
 ]
 
 export const stringGenerator = () => {
-  const stringTasks: Record<string, string>[] = [{ name: 'zero length', value: '' }]
-  generateCombinations(CHARSET, [], stringTasks)
+  let stringTasks: Record<string, string>[] = [{ name: 'zero length', value: '' }]
+  stringTasks = stringTasks.concat(genTestFunction(CHARSET[0]))
+  stringTasks = stringTasks.concat(genTestFunction(CHARSET[1]))
+  stringTasks = stringTasks.concat(genTestFunction(CHARSET[2]))
   return stringTasks
 }
 
-const generateCombinations = (leftCharset: string[], rightCharset: string[], stringTasks: Record<string, string>[]) => {
-  if (!leftCharset.length && !rightCharset.length) return
-  if (!rightCharset.length) stringTasks.concat(genTestFunction(leftCharset.join('')))
-  else {
-    generateCombinations(leftCharset.concat(rightCharset[0]), rightCharset.slice(1), stringTasks)
-    generateCombinations(leftCharset, rightCharset.slice(1), stringTasks)
-  }
-}
+

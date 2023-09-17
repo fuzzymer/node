@@ -11,7 +11,6 @@ export const urlParser = (urlTemplate: string) => {
   let pathCounter = 0
   for (const subPath of url.pathname.split('/')) {
     const decodedSubPath = decodeURIComponent(subPath)
-    
     if (/{[A-Z]*}/gm.test(decodedSubPath)) {
       const dataType = stripTemplate(decodedSubPath)
       if (!DataTypes[dataType.toUpperCase()]) throw new UnknownDataTypeError(dataType)
@@ -21,7 +20,6 @@ export const urlParser = (urlTemplate: string) => {
       parsedUrl.pathParams.push(decodedSubPath)
     }
   }
-  console.log(parsedUrl)
   for (const [key, value] of url.searchParams) {
     if (/{[A-Z]*}/gm.test(value)) {
       const dataType = stripTemplate(value)
