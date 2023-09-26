@@ -10,7 +10,7 @@ export class Runner extends Collector {
   }
 
   protected runTestPlan = async (testPlan: TestPlan, func: TestFunction, expect: Expect) => {
-    this.testPlan = testPlan;
+    //this.testPlan = testPlan;
     for (let test = 0; test < 10; test++) {
       const argList = testPlan.tasks.map((taskPlan) => taskPlan.testValues.argTests[test])
       const args = argList.map((record) => record.value)
@@ -37,6 +37,6 @@ export class Runner extends Collector {
           })
       }
     }
-    this.prettyPrint();
+    // this.prettyPrint();
   }
 }

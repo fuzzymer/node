@@ -39,21 +39,17 @@ export interface TestPlan {
   tasks: TaskPlan[]
 }
 
-export interface Expect {
-  expectFunction: (...args: unknown[]) => Promise<boolean> | boolean
-  valueToExpect: number | string | Record<string, unknown>
-}
 
-export type ParsedUrl = {
-  url: string
-  queryParams: Record<string, string | null>
-  pathParams: (string | null)[]
-  testArgs: Record<string, string>[]
-}
+
 
 export type TestFunction = (...args: unknown[]) => Promise<unknown>
 
 export type TestMetadata = {
   argList: Record<string, unknown>[]
   error?: Error;
+}
+
+export interface Expect {
+  expectFunction: (...args: unknown[]) => Promise<boolean> | boolean
+  valueToExpect: number | string | Record<string, unknown>
 }

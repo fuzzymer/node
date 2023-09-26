@@ -1,5 +1,7 @@
-import { UnknownDataTypeError } from './errors.js'
-import { DataTypes, ParsedUrl } from './types.js'
+
+import { DataTypes, UnknownDataTypeError } from "@fuzzymer/runner"
+import { ParsedUrl } from "./types"
+
 
 export const urlParser = (urlTemplate: string) => {
   const parsedUrl: Partial<ParsedUrl> = {}

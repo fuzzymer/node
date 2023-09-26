@@ -1,8 +1,7 @@
 import { httpStatusExpectFunction } from './expect/http'
-import { generateTests } from './generators/generator'
-import { Runner } from './runner.js'
-import { FuzzyOptions, Options, ParsedUrl, TestFunction, TestPlan } from './types.js'
 import { replaceStringArgWithValue, urlParser } from './utils.js'
+import { ParsedUrl } from './types'
+import { FuzzyOptions, Options, Runner, TestFunction, generateTests, TestPlan } from '@fuzzymer/runner'
 
 export class FuzzyHttp extends Runner {
   constructor(options?: Options) {
@@ -15,14 +14,10 @@ export class FuzzyHttp extends Runner {
   get = async (urlTemplate: string, options?: FuzzyOptions) => {
     const parsedUrl = urlParser(urlTemplate)
     const fetchFunction = this.#wrapHttpRequest(parsedUrl as ParsedUrl, 'GET', options?.headers)
-    await this.runTestPlan(
-      generateTests(parsedUrl.testArgs!, 10) as TestPlan,
-      fetchFunction as TestFunction,
-      {
-        valueToExpect: 200,
-        expectFunction: httpStatusExpectFunction
-      }
-    )
+    await this.runTestPlan(generateTests(parsedUrl.testArgs!, 10) as TestPlan, fetchFunction as TestFunction, {
+      valueToExpect: 200,
+      expectFunction: httpStatusExpectFunction
+    })
   }
 
   #wrapHttpRequest = (parsedUrl: ParsedUrl, method: string, headers?: Record<string, string>) => {

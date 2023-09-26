@@ -1,0 +1,20 @@
+{
+  "name": "@fuzzymer/http",
+  "version": "1.0.0",
+  "description": "",
+  "source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@fuzzymer/runner": "workspace:*"
+  },
+  "devDependencies": {
+    "parcel": "^2.9.3"
+  },
+  "scripts": {
+    "build": "parcel build"
+  }
+}
