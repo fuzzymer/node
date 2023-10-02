@@ -38,7 +38,18 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
-  packages/cli: {}
+  packages/cli:
+    dependencies:
+      '@fuzzymer/http':
+        specifier: workspace:*
+        version: link:../http
+      cac:
+        specifier: ^6.7.14
+        version: 6.7.14
+    devDependencies:
+      parcel:
+        specifier: ^2.9.3
+        version: 2.9.3(typescript@5.2.2)
 
   packages/http:
     dependencies:
@@ -1747,6 +1758,11 @@ packages:
     dependencies:
       run-applescript: 5.0.0
     dev: true
+
+  /cac@6.7.14:
+    resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
+    engines: {node: '>=8'}
+    dev: false
 
   /callsites@3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}

@@ -41,6 +41,3 @@ export class FuzzyHttp extends Runner {
     return httpFetchFunction
   }
 }
-
-const fux = new FuzzyHttp({ exitOnError: false })
-;(async () => await fux.get('https://eglobaldev.azurewebsites.net/api/othermedical/Profile/Get/featured/{STRING}'))()
